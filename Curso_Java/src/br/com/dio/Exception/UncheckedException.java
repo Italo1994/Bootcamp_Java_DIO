@@ -4,11 +4,23 @@ import javax.swing.*;
 
 public class UncheckedException {
     public static void main(String[] args) {
-        String a = JOptionPane.showInputDialog("Numerador: ");
-        String b = JOptionPane.showInputDialog("Denominador: ");
+        boolean continueLooping = true;
+        do {
+            String a = JOptionPane.showInputDialog("Numerador: ");
+            String b = JOptionPane.showInputDialog("Denominador: ");
 
-        int resultado = dividir(Integer.parseInt(a), Integer.parseInt(b));
-        System.out.println("Resultado: "+ resultado);
+            try {
+                int resultado = dividir(Integer.parseInt(a), Integer.parseInt(b));
+                System.out.println("Resultado: "+ resultado);
+                continueLooping = false;
+            } catch(NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Entrada inválida, informe um número inteiro!");
+            } catch(ArithmeticException e) {
+                JOptionPane.showMessageDialog(null, "Impossível dividir um número por 0!");
+            } finally {
+                System.out.println("Chegou no finally!");
+            }
+        } while(continueLooping);
     }
 
     public static int dividir(int a, int b) {
